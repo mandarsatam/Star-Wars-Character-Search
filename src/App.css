@@ -1,6 +1,7 @@
 .app {
     min-height: 100vh;
     background: #110b0b;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    /* justify-content: center;
+    align-items: center; */
 }

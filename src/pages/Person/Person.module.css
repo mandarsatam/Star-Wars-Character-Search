@@ -1,0 +1,12 @@
+.personCont{
+    padding-top: 10em;
+    text-align: center;
+}
+
+.personCont h1{
+    color: white;
+}
+
+.spinnerIcon img{
+    max-width: 8em;
+}
