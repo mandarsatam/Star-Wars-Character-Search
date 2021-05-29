@@ -4,6 +4,7 @@ import styles from './HomePage.module.css';
 import {Search} from "../../Components/Search/Search"
 
 function HomePage() {
+
   return (
     <div className={styles.homeCont}>
       <div className={styles.logo}>

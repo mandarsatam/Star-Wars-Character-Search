@@ -5,12 +5,3 @@
     text-align: left;
     padding: 8px;
 }
-
-.active{
-    display : flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    text-align: left;
-    padding: 8px;
-    background-color: #242627;
-}

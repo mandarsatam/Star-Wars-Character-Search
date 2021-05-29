@@ -9,40 +9,74 @@ import axios from 'axios';
 const Search = () => {
     const [query, setQuery] = React.useState("");
     const [characterList, setCharacterList] = React.useState([]);
-    const [active, setActive] = React.useState(false);
+    const [dropDownActive, setDropDownActive] = React.useState(false);
     const [index, setIndex] = React.useState(-1);
     const [isLoading, setIsLoading] = React.useState(false);
 
+    let characterListRef = React.useRef();
     let debounceTimer = React.useRef();
+    const searchRef = React.useRef();
+
+    characterListRef.current = characterList.length;
 
     const getSearchResults = () => {
         if(query.length > 0){
-            setIsLoading(true);
             axios.get("https://swapi.dev/api/people/", {
                 params: { search : query}
             })
-            .then(res => setCharacterList(res.data.results.filter((_, idx) => idx < 5)))
-            .then(() => {
-                setActive(true);
-                setIsLoading(false);
+            .then(res => {
+                setCharacterList(res.data.results.filter((_, idx) => idx < 5));
+                if(res.data.results.length > 0){
+                    setDropDownActive(true);
+                    setIsLoading(false);
+                }else{
+                    setDropDownActive(false);
+                    setIsLoading(false);
+                }
             })
         }else{
             setCharacterList([]);
-            setActive(false);
+            setDropDownActive(false);
             setIsLoading(false);
         }
     }
 
+    const handleClickOutside = (e) => {
+        if(searchRef.current && !searchRef.current.contains(e.target)){
+            setDropDownActive(false);
+        }else if(searchRef.current.contains(e.target) && characterListRef.current > 0){
+            setDropDownActive(true);
+        }
+    }
+
+    const handleClearInput = () => {
+        setIsLoading(false);
+        setQuery("");
+        setCharacterList([]);
+        setDropDownActive(false);
+    }
+
     React.useEffect(() => {
+        setIsLoading(true);
         debounceTimer.current && clearTimeout(debounceTimer.current);
         debounceTimer.current = setTimeout(() => {
             getSearchResults();
         }, 500);
+        setIndex(-1);
     }, [query]);
+
+    React.useEffect(() => {
+        document.addEventListener("mousedown",handleClickOutside);
+        return () => {
+          // Unbind the event listener on clean up
+          document.removeEventListener("mousedown",handleClickOutside);
+        };
+    }, [])
+
 
     const moveUpDown = (e) => {
         if (e.key === "ArrowDown") {
-            if (active) {
+            if (dropDownActive) {
                 let idx = index;
                 if (index < characterList.length - 1) {
                     idx++;
@@ -51,36 +85,49 @@ const Search = () => {
             }
         }
         if (e.key === "ArrowUp") {
-            setIndex(c => (c > 0 ? c - 1 : 0));
+            setIndex(c => (c >= 0 ? c - 1 : -1));
         }
         if (e.key === "Escape") {
-            setActive(false);
+            setDropDownActive(false);
         }
-        // if (e.key === "Enter" && cursor > 0) {
-        //     setSearch(suggestions[cursor].name);
-        //     hideSuggestion();
-        //     onSelect(suggestions[cursor]);
-        // }
+        if (e.key === "Enter" && index >= 0) {
+            console.log(characterList[index].name)
+            // setSearch(suggestions[cursor].name);
+            // hideSuggestion();
+            // onSelect(suggestions[cursor]);
+        }
 
     }
 
 
     return (
-        <div className={styles.searchCont}>
+        <div className={styles.searchCont} ref={searchRef}>
             <div className={styles.searchBarCont}>
-                <input className={styles.searchInput} placeholder="Search by name" onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => moveUpDown(e)} />
-                {
-                    isLoading ?
-                        (<div className={styles.spinnerIcon}>
-                            <img src={spinner} alt="loading.." />
-                        </div>)
-                        :
-                        (<div className={styles.searchIcon}>
-                            <i className="fas fa-search"></i>
-                        </div>)
-                }
+                <input style={{borderRadius: dropDownActive? "25px 25px 0 0" : "25px"}} className={styles.searchInput}  placeholder="Search by name" onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => moveUpDown(e)} value={query}/>
+                    {query.length > 0 ?
+                    (
+                        <div className={styles.clearInputIcon}>
+                            <div className={styles.crossIcon} onClick={handleClearInput}>
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div className={styles.verticalLine}></div>
+                        </div>
+                    ): ""   
+                    }
+                    <div className={styles.spinnerSearchIcon} style={{borderRadius: dropDownActive? "0 25px 0 0" : "0 25px 25px 0"}}>
+                        {
+                            isLoading ?
+                            (
+                                <img src={spinner} alt="loading.." />
+                            ):
+                            (
+                                <i className="fas fa-search"></i>
+                            )
+                        }
+                    </div>
             </div>
-            <div className={styles.dropDown}>
+            {/* <hr className={styles.divider}/> */}
+            <div className={styles.dropDown} style={{display: dropDownActive? "block" : "none"}}>
                 {
                     characterList?.map((char, idx) => (
                         <SearchItem name={char.name} gender={char.gender} year={char.year} selected={index === idx ? true : false} key={char.name} />
