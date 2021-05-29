@@ -1,0 +1,16 @@
+.homeCont{
+    width: 50%;
+    margin: auto;
+    padding-top: 10em;
+}
+
+.logo {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.logo img{
+    width:200px;
+}
+
