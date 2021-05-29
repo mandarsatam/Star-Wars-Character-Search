@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from "./Search.module.css"
-import { getCharacters } from '../../utils';
-import { SearchItem } from "../SearchItem/SearchItem"
 import spinner from "../../resources/spinner.svg"
 import axios from 'axios';
 import { useHistory } from "react-router"

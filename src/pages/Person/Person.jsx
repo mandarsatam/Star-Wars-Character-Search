@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPersonImage, getPersonData, getAllData } from '../../utils';
 import { useParams } from "react-router";
 import styles from "../Person/Person.module.css"
 import spinner from "../../resources/spinner.svg"
