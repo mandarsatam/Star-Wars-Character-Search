@@ -88,6 +88,28 @@
     cursor: pointer;
 }
 
+.dropDownContent{
+    display : flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    text-align: left;
+    padding: 5px 20px;
+}
+
+.dropDownContent:hover{
+    cursor: pointer;
+}
+
+.dropDownContent h4{
+    font-weight: 300;
+    /* line-height: 0.4em; */
+    margin: 0.4em 0;
+}
+
+.dropDownContent p{
+    font-size:0.8em;
+    margin: 0.3em 0;
+}
 
 
 

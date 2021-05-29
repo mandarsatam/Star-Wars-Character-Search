@@ -1,7 +1,0 @@
-.dropDownContent{
-    display : flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    text-align: left;
-    padding: 8px;
-}

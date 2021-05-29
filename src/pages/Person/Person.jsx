@@ -8,17 +8,20 @@ import {useHistory} from "react-router"
 
 
 function Person() {
-  const {id} = useParams();
-  const [imageData, setImageData] = React.useState({});
-  const [data, setData] = React.useState({});
+  const {id} = useParams(); //Get character id from param
+  const [imageData, setImageData] = React.useState({}); //For storing image
+  const [data, setData] = React.useState({}); //For storing the rest of the data
   const [isLoading, setIsLoading] = React.useState(false);
 
   const history = useHistory();
 
+  //Function to make the API call
   const fetchData = () => {
     setIsLoading(true);
     const personImage = axios.get(`https://akabab.github.io/starwars-api/api/id/${id}.json`);
     const personData = axios.get(`https://swapi.dev/api/people/${id}`);
+
+    // Combining two axios call and populating the states
     axios.all([personImage, personData]).then(axios.spread((...res) => {
       setImageData(res[0].data.image);
       setData(res[1].data);
