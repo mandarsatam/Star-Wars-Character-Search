@@ -13,6 +13,7 @@ const Search = () => {
     const [dropDownActive, setDropDownActive] = React.useState(false);
     const [index, setIndex] = React.useState(-1);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
 
     const history = useHistory();
 
@@ -23,20 +24,21 @@ const Search = () => {
     characterListRef.current = characterList.length;
 
     const getSearchResults = () => {
+        setIsLoading(true);
         if (query.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
                 params: { search: query }
             })
-                .then(res => {
-                    setCharacterList(res.data.results.filter((_, idx) => idx < 5));
-                    if (res.data.results.length > 0) {
-                        setDropDownActive(true);
-                        setIsLoading(false);
-                    } else {
-                        setDropDownActive(false);
-                        setIsLoading(false);
-                    }
-                })
+            .then(res => {
+                setCharacterList(res.data.results.filter((_, idx) => idx < 5));
+                if (res.data.results.length > 0) {
+                    setDropDownActive(true);
+                    setIsLoading(false);
+                } else {
+                    setDropDownActive(false);
+                    setIsLoading(false);
+                }
+            })
         } else {
             setCharacterList([]);
             setDropDownActive(false);

@@ -4,12 +4,16 @@ import { useParams } from "react-router";
 import styles from "../Person/Person.module.css"
 import spinner from "../../resources/spinner.svg"
 import axios from 'axios';
+import {useHistory} from "react-router"
+
 
 function Person() {
   const {id} = useParams();
   const [imageData, setImageData] = React.useState({});
   const [data, setData] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const history = useHistory();
 
   const fetchData = () => {
     setIsLoading(true);
@@ -22,7 +26,10 @@ function Person() {
     })).catch(e => console.log(e));
   }
 
-  console.log(imageData, data)
+  const handleGoBack = () => {
+    history.push("/");
+  }
+
 
   React.useEffect(()=> {
     fetchData();
@@ -36,6 +43,9 @@ function Person() {
         </div>):
         (
           <>
+          <div className={styles.backButton} onClick={handleGoBack}>
+            <i class="fas fa-chevron-left"></i>
+          </div>
           <div className={styles.personContLeft}>
             <img src={imageData} alt="character image" className={styles.characterImage}/>
           </div>

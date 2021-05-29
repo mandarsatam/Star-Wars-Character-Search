@@ -4,10 +4,28 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     max-height: 100vh;
+    position: relative;
+}
+
+.backButton{
+    position: fixed;
+    margin-top: 1em;
+    margin-left: 1em;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.backButton i{
+    color: white;
+    font-size: 3em;
+    color :#aaaaaa;
 }
 
 .personCont h1{
+    /* position: absolute;
+    left: 20%; */
     color: white;
+    line-height: 1em;
 }
 
 .personContLeft{
@@ -45,6 +63,6 @@
 }
 
 .personContRight h1{
-    font-size: 4em;
+    font-size: 6em;
     color: #ecd014;
 }
