@@ -1,12 +1,50 @@
 .personCont{
-    padding-top: 10em;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    max-height: 100vh;
 }
 
 .personCont h1{
     color: white;
 }
 
-.spinnerIcon img{
-    max-width: 8em;
+.personContLeft{
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+    position: relative;
+}
+
+.characterImage{
+    width: 100%;
+	display: block;
+    filter: brightness(60%);
+    max-height: 100%;
+    object-fit: cover;
+    object-position: 100% 0;
+}
+
+.personContLeft:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: -56px 0px 57px 49px rgba(17, 11, 11, 1) inset;
+}
+
+.personContRight{
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+    padding: 2em;
+    font-family: 'Star Jedi', arial;
+}
+
+.personContRight h1{
+    font-size: 4em;
+    color: #ecd014;
 }

@@ -4,6 +4,7 @@ import { getCharacters } from '../../utils';
 import { SearchItem } from "../SearchItem/SearchItem"
 import spinner from "../../resources/spinner.svg"
 import axios from 'axios';
+import {useHistory} from "react-router"
 
 
 const Search = () => {
@@ -13,6 +14,8 @@ const Search = () => {
     const [index, setIndex] = React.useState(-1);
     const [isLoading, setIsLoading] = React.useState(false);
 
+    const history = useHistory();
+
     let characterListRef = React.useRef();
     let debounceTimer = React.useRef();
     const searchRef = React.useRef();
@@ -20,21 +23,21 @@ const Search = () => {
     characterListRef.current = characterList.length;
 
     const getSearchResults = () => {
-        if(query.length > 0){
+        if (query.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
-                params: { search : query}
+                params: { search: query }
             })
-            .then(res => {
-                setCharacterList(res.data.results.filter((_, idx) => idx < 5));
-                if(res.data.results.length > 0){
-                    setDropDownActive(true);
-                    setIsLoading(false);
-                }else{
-                    setDropDownActive(false);
-                    setIsLoading(false);
-                }
-            })
-        }else{
+                .then(res => {
+                    setCharacterList(res.data.results.filter((_, idx) => idx < 5));
+                    if (res.data.results.length > 0) {
+                        setDropDownActive(true);
+                        setIsLoading(false);
+                    } else {
+                        setDropDownActive(false);
+                        setIsLoading(false);
+                    }
+                })
+        } else {
             setCharacterList([]);
             setDropDownActive(false);
             setIsLoading(false);
@@ -42,9 +45,9 @@ const Search = () => {
     }
 
     const handleClickOutside = (e) => {
-        if(searchRef.current && !searchRef.current.contains(e.target)){
+        if (searchRef.current && !searchRef.current.contains(e.target)) {
             setDropDownActive(false);
-        }else if(searchRef.current.contains(e.target) && characterListRef.current > 0){
+        } else if (searchRef.current.contains(e.target) && characterListRef.current > 0) {
             setDropDownActive(true);
         }
     }
@@ -64,12 +67,13 @@ const Search = () => {
         }, 500);
         setIndex(-1);
     }, [query]);
+    
 
     React.useEffect(() => {
-        document.addEventListener("mousedown",handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
-          // Unbind the event listener on clean up
-          document.removeEventListener("mousedown",handleClickOutside);
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [])
 
@@ -91,10 +95,11 @@ const Search = () => {
             setDropDownActive(false);
         }
         if (e.key === "Enter" && index >= 0) {
-            console.log(characterList[index].name)
-            // setSearch(suggestions[cursor].name);
-            // hideSuggestion();
-            // onSelect(suggestions[cursor]);
+            let arr = characterList[index].url?.trim().split("/");
+            let id = arr[arr?.length - 2];
+            history.push({
+                pathname: `/person/${id}`
+            })
         }
 
     }
@@ -103,8 +108,14 @@ const Search = () => {
     return (
         <div className={styles.searchCont} ref={searchRef}>
             <div className={styles.searchBarCont}>
-                <input style={{borderRadius: dropDownActive? "25px 25px 0 0" : "25px"}} className={styles.searchInput}  placeholder="Search by name" onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => moveUpDown(e)} value={query}/>
-                    {query.length > 0 ?
+                <input 
+                style={{ borderRadius: dropDownActive ? "25px 25px 0 0" : "25px" }} 
+                className={styles.searchInput} 
+                placeholder="Search by name" 
+                onChange={(e) => setQuery(e.target.value)} 
+                onKeyDown={(e) => moveUpDown(e)} 
+                value={query} />
+                {query.length > 0 ?
                     (
                         <div className={styles.clearInputIcon}>
                             <div className={styles.crossIcon} onClick={handleClearInput}>
@@ -112,22 +123,22 @@ const Search = () => {
                             </div>
                             <div className={styles.verticalLine}></div>
                         </div>
-                    ): ""   
-                    }
-                    <div className={styles.spinnerSearchIcon} style={{borderRadius: dropDownActive? "0 25px 0 0" : "0 25px 25px 0"}}>
-                        {
-                            isLoading ?
+                    ) : ""
+                }
+                <div className={styles.spinnerSearchIcon} style={{ borderRadius: dropDownActive ? "0 25px 0 0" : "0 25px 25px 0" }}>
+                    {
+                        isLoading ?
                             (
                                 <img src={spinner} alt="loading.." />
-                            ):
+                            ) :
                             (
                                 <i className="fas fa-search"></i>
                             )
-                        }
-                    </div>
+                    }
+                </div>
             </div>
             {/* <hr className={styles.divider}/> */}
-            <div className={styles.dropDown} style={{display: dropDownActive? "block" : "none"}}>
+            <div className={styles.dropDown} style={{ display: dropDownActive ? "block" : "none" }}>
                 {
                     characterList?.map((char, idx) => (
                         <SearchItem name={char.name} gender={char.gender} year={char.year} selected={index === idx ? true : false} key={char.name} />

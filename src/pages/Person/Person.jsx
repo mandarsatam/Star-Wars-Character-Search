@@ -16,36 +16,33 @@ function Person() {
     const personImage = axios.get(`https://akabab.github.io/starwars-api/api/id/${id}.json`);
     const personData = axios.get(`https://swapi.dev/api/people/${id}`);
     axios.all([personImage, personData]).then(axios.spread((...res) => {
-      setImageData(res[0].data);
+      setImageData(res[0].data.image);
       setData(res[1].data);
       setIsLoading(false);
     })).catch(e => console.log(e));
   }
 
+  console.log(imageData, data)
+
   React.useEffect(()=> {
-    // setIsLoading(true);
-    // getPersonImage(id)
-    // .then(res => setImageData(res.data));
-    // getPersonData(id)
-    // .then()
-    // .then(()=> getPersonData(id).then(res => {
-    //   setData(res.data)
-    //   setIsLoading(false);
-    //   }
-    // ))
     fetchData();
   }, [])
-
-  console.log(data, imageData)
 
   return (
     <div className={styles.personCont}>
       {isLoading ? 
         (<div className={styles.spinnerIcon}>
-          <img src={spinner} alt="loading.." />
+          <img src={spinner} alt="loading.." styles={{maxWidth: "25px", marginTop: "3em"}}/>
         </div>):
         (
-          <h1>{data.name}</h1>
+          <>
+          <div className={styles.personContLeft}>
+            <img src={imageData} alt="character image" className={styles.characterImage}/>
+          </div>
+          <div className={styles.personContRight}>
+            <h1>{data.name}</h1>
+          </div>
+          </>
         )
         }
     </div>
