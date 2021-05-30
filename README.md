@@ -1,12 +1,6 @@
 # Star Wars Character Search:
 This os Star Wars Character Search bar build as an assignment for Urban Piper Coding Challenge. Users can search for their faviourite characters in Star Wars.
 
-
-## Deployed Link & Image Samples
-Click here :point_right: [Star Wars Search](https://practo.netlify.app/)
-
-![Sample image of project](https://i.imgur.com/bme2syr.png)
-
 ## Features Built
 - User can search for characters in the search bar
 - Sugggestions will be given as the user types
