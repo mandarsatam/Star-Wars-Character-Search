@@ -32,6 +32,8 @@ function Person() {
     history.push("/");
   }
 
+  console.log(imageData, data)
+
 
   React.useEffect(()=> {
     fetchData();
@@ -40,8 +42,8 @@ function Person() {
   return (
     <div className={styles.personCont}>
       {isLoading ? 
-        (<div className={styles.spinnerIcon}>
-          <img src={spinner} alt="loading.." styles={{maxWidth: "25px", marginTop: "3em"}}/>
+        (<div className={styles.spinnerCont}>
+          <img src={spinner} alt="loading.." className={styles.spinner}/>
         </div>):
         (
           <>
@@ -53,10 +55,30 @@ function Person() {
           </div>
           <div className={styles.personContRight}>
             <h1>{data.name}</h1>
+            <div className={styles.detailsGrid}>
+            <div>
+                <p>BORN : {data.birth_year?.toUpperCase()}</p>
+              </div>
+              <div>
+                <p>GENDER : {data.gender?.toUpperCase()}</p>
+              </div>
+              <div>
+                <p>EYE : {data.eye_color?.toUpperCase()}</p>
+              </div>
+              <div>
+                <p>HAIR : {data.hair_color?.toUpperCase()}</p>
+              </div>
+              <div>
+                <p>HEIGHT : {data.height?.toUpperCase()}</p>
+              </div>
+              <div>
+                <p>WEIGHT : {data.mass?.toUpperCase()}</p>
+              </div>
+            </div>
           </div>
           </>
         )
-        }
+    }
     </div>
   );
 }

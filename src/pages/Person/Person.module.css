@@ -7,6 +7,17 @@
     position: relative;
 }
 
+.spinnerCont{
+    text-align: center;
+    width: 100%;
+}
+
+.spinner{
+    width: 5em;
+    text-align: center;
+    margin: 5em auto;
+}
+
 .backButton{
     position: fixed;
     margin-top: 1em;
@@ -66,3 +77,45 @@
     font-size: 6em;
     color: #ecd014;
 }
+
+.detailsGrid{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "born gender"
+        "eye hair"
+        "height mass";
+
+    font-family: 'Roboto', sans-serif;
+    color: #ecd014;
+}
+
+.detailsGrid div{
+    border: 1px solid #ecd014;
+}
+
+.detailsGrid p{
+    margin-left: 1em;
+}
+
+/* .born{
+    grid-area: born;
+}
+.born{
+    grid-area: gender;
+}
+.born{
+    grid-area: eye;
+}
+.born{
+    grid-area: hair;
+}
+.born{
+    grid-area: height;
+}
+.born{
+    grid-area: mass;
+} */

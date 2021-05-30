@@ -12,6 +12,7 @@ const Search = () => {
     const [index, setIndex] = React.useState(-1); //Index of selected option in dropdown
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
+    const [reqStatus, setReqStatus] = React.useState(false);
 
     const history = useHistory();
 
@@ -29,7 +30,7 @@ const Search = () => {
 
     const getSearchResults = () => {
         //Function to make api request and set state for the app
-        if (query.length > 0) {
+        if (inputRef.current.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
                 params: { search: query }
             })
@@ -39,10 +40,15 @@ const Search = () => {
                     if (res.data.results.length > 0) {
                         setDropDownActive(true);
                         setIsLoading(false);
+                        setReqStatus(false);
                     } else {
                         setDropDownActive(false);
                         setIsLoading(false);
+                        setReqStatus(true);
                     }
+                })
+                .catch((e) => {
+                    setIsError(true);
                 })
         } else {
             //Resetting the characterList to empty array and visibility of dropDown to false
@@ -69,20 +75,35 @@ const Search = () => {
         setQuery("");
         setCharacterList([]);
         setDropDownActive(false);
+        setReqStatus(false);
     }
 
     React.useEffect(() => {
         //Debouncing the query so that the api request is made after 500ms of user typing
-        setIsLoading(true);
+        setIsLoading(false);
+
+        if (
+            inputRef.current === null || inputRef.current === ""
+        ) {
+            setCharacterList([]);
+            setDropDownActive(false);
+            setIsLoading(false);
+            setReqStatus(false);
+            return; 
+        }
 
         //cleanup
         debounceTimer.current && clearTimeout(debounceTimer.current);
-
+    
+        setIsLoading(true);
         //settimeout
         debounceTimer.current = setTimeout(() => {
             getSearchResults();
         }, 500);
+
+        //Resetting selection index to -1
         setIndex(-1);
+
     }, [inputRef.current]);
 
 
@@ -143,6 +164,7 @@ const Search = () => {
     }
 
     return (
+        <>
         <div className={styles.searchCont} ref={searchRef}>
             <div className={styles.searchBarCont}>
                 {/* Input Bar */}
@@ -153,7 +175,6 @@ const Search = () => {
                     onChange={handleQuery}
                     onKeyDown={(e) => moveUpDown(e)}
                     value={query}
-                    ref={inputRef}
                 />
                 {/* Check for query length to display cross icon along with a vertical line */}
                 {query.length > 0 ?
@@ -197,6 +218,17 @@ const Search = () => {
                 }
             </div>
         </div>
+        {
+            isError?
+            <p className={styles.errorMessage}>Something went Wrong</p>
+            : ""
+        }
+        {
+            characterList.length === 0 && reqStatus === true?
+            <p className={styles.errorMessage}>You have reached the dark side!</p>
+            : ""
+        }
+        </>
     )
 }
 
