@@ -34,7 +34,7 @@ const Search = () => {
 
     //Function to make api request and set state for the app
     const getSearchResults = () => {
-        if (query.length > 0) {
+        if (inputRef.current.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
                 params: { search: query }
             })
@@ -87,7 +87,7 @@ const Search = () => {
         //Resetting selection index to -1
         setIndex(-1);
 
-    }, [query]);
+    }, [inputRef.current]);
 
 
     //Function to reset the state if user clears the input using the cross button
