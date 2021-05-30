@@ -1,11 +1,12 @@
 # Star Wars Character Search:
-This os Star Wars Character Search bar build as an assignment for Urban Piper Coding Challenge. Users can search for their faviourite characters in Star Wars.
+This ss Star Wars Character Search bar build as an assignment for Urban Piper Coding Challenge. Users can search for their faviourite characters in Star Wars.
 
 
 ## Deployed Link & Image Samples
-Click here :point_right: [Star Wars Search](https://practo.netlify.app/)
+Click here :point_right: [Star Wars Search](https://starwarssearchcharacter.netlify.app/)
 
-![Sample image of project](https://i.imgur.com/bme2syr.png)
+![Imgur](https://i.imgur.com/M4Bam8O.png)
+
 
 ## Features Built
 - User can search for characters in the search bar
@@ -38,7 +39,7 @@ Click here :point_right: [Star Wars Search](https://practo.netlify.app/)
 
 ### 3. NPM package installations
 - Open the clonned repository,
-    - Run `yarn install` in terminal
+    - Run `npm install` in terminal
  
 ### 4. Run application
 - Before running the application, kill the applications currently running on port 3000

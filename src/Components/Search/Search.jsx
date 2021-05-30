@@ -3,6 +3,7 @@ import styles from "./Search.module.css"
 import spinner from "../../resources/spinner.svg"
 import axios from 'axios';
 import { useHistory } from "react-router"
+import {SearchOption} from "../SearchOption/SearchOption"
 
 
 const Search = () => {
@@ -33,7 +34,7 @@ const Search = () => {
 
     //Function to make api request and set state for the app
     const getSearchResults = () => {
-        if (inputRef.current.length > 0) {
+        if (query.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
                 params: { search: query }
             })
@@ -65,7 +66,7 @@ const Search = () => {
     React.useEffect(() => {
         //If the current input is null or empty, return to avoid making api request
         if (
-            inputRef.current === null || inputRef.current === ""
+            inputRef.current === null || inputRef.current === "" || query ===""
         ) {
             setCharacterList([]);
             setDropDownActive(false);
@@ -86,7 +87,8 @@ const Search = () => {
         //Resetting selection index to -1
         setIndex(-1);
 
-    }, [inputRef.current]);
+    }, [query]);
+
 
     //Function to reset the state if user clears the input using the cross button
     const handleClearInput = () => {
@@ -184,7 +186,7 @@ const Search = () => {
                     (
                         <div className={styles.clearInputIcon}>
                             <div className={styles.crossIcon} onClick={handleClearInput}>
-                                <i class="fas fa-times"></i>
+                                <i className="fas fa-times"></i>
                             </div>
                             <div className={styles.verticalLine}></div>
                         </div>
@@ -208,15 +210,26 @@ const Search = () => {
                 {
                     characterList?.map((char, idx) => (
                         // Individual Option in dropdown, Mouse Over event handler and event handler for clicks
-                        <div className={styles.dropDownContent} style={{ backgroundColor: index === idx ? "#242627" : "" }}
-                            onMouseEnter={() => handleMouseHover(idx)}
-                            onClick={handleMouseClick}>
-                            <div>
-                                <h4>{char.name}</h4>
-                                <p>{char.birth_year}</p>
-                            </div>
-                            <p>{char.gender}</p>
-                        </div>
+                        // <div className={styles.dropDownContent} style={{ backgroundColor: index === idx ? "#242627" : "" }}
+                        //     onMouseEnter={() => handleMouseHover(idx)}
+                        //     onClick={handleMouseClick}
+                        //     key ={char.name}>
+                        //     <div>
+                        //         <h4>{char.name}</h4>
+                        //         <p>{char.birth_year}</p>
+                        //     </div>
+                        //     <p>{char.gender}</p>
+                        // </div>
+                        <SearchOption 
+                        // onMouseEnter={() => handleMouseHover(idx)}
+                        handleMouseClick={handleMouseClick}
+                        selected={index === idx ? true : false}
+                        name={char.name}
+                        handleMouseHover={handleMouseHover}
+                        idx = {idx}
+                        key={char.name}
+                        year={char.birth_year}
+                        gender= {char.gender}/>
                     ))
                 }
             </div>

@@ -17,8 +17,8 @@ function Person() {
   //Function to make the API call
   const fetchData = () => {
     setIsLoading(true);
-    const personImage = axios.get(`https://akabab.github.io/starwars-api/api/id/${id}.json`);
     const personData = axios.get(`https://swapi.dev/api/people/${id}`);
+    const personImage = axios.get(`https://akabab.github.io/starwars-api/api/id/${id}.json`);
 
     // Combining two axios call and populating the states
     axios.all([personImage, personData]).then(axios.spread((...res) => {
@@ -31,9 +31,6 @@ function Person() {
   const handleGoBack = () => {
     history.push("/");
   }
-
-  console.log(imageData, data)
-
 
   React.useEffect(()=> {
     fetchData();
