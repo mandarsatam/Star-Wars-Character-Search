@@ -1,5 +1,6 @@
 .searchCont{
-    width: 100%;
+    width: 70%;
+    margin: auto;
     position: relative;
     background: #2d2f30;
     color: #f2f2f2;
@@ -113,6 +114,16 @@
 .errorMessage{
     text-align:center;
     color: #aaaaaa;
+}
+
+
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+        .searchCont{
+            width: 100%;
+        }
 }
 
 

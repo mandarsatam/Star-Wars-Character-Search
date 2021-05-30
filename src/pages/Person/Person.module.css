@@ -100,21 +100,70 @@
     margin-left: 1em;
 }
 
-/* .born{
-    grid-area: born;
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .personCont{
+        flex-direction: column;
+        max-height: 100vh;
+    }
+
+    .personContLeft{
+        max-width:100%;
+        max-height: 50vh;
+    }
+
+    .characterImage{
+        max-height: 50vh;
+        object-fit: cover;
+        object-position: 100% 0;
+    }
+
+    .personContLeft:after {
+        box-shadow: 25px -69px 61px 13px rgba(17, 11, 11, 1) inset;
+    }
+
+    .personContRight{
+        max-width:100%;
+        max-height: 50vh;
+        position: absolute;
+        top: 50%;
+    }
+
+    .detailsGrid{
+        width:100%;
+    }
 }
-.born{
-    grid-area: gender;
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 760px) {
+    .personCont{
+        flex-direction: column;
+        max-height: 100vh;
+    }
+
+    .personContLeft{
+        max-width:100%;
+        max-height: 50vh;
+    }
+
+    .characterImage{
+        max-height: 50vh;
+        object-fit: cover;
+        object-position: 100% 0;
+    }
+
+    .personContLeft:after {
+        box-shadow: 25px -69px 61px 13px rgba(17, 11, 11, 1) inset;
+    }
+
+    .personContRight{
+        max-width:100%;
+        max-height: 50vh;
+        position: absolute;
+        top : 50%;
+    }
+
+    .detailsGrid{
+        width:100%;
+    }
 }
-.born{
-    grid-area: eye;
-}
-.born{
-    grid-area: hair;
-}
-.born{
-    grid-area: height;
-}
-.born{
-    grid-area: mass;
-} */
