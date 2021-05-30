@@ -1,3 +1,11 @@
+.searchCont{
+    width: 100%;
+    position: relative;
+    background: #2d2f30;
+    color: #f2f2f2;
+    background-color: #2d2f30;
+    border-radius: 25px;
+}
 .searchBarCont{
     display: flex;
     flex-wrap: nowrap;
@@ -28,42 +36,6 @@
     cursor: pointer;
 }
 
-.spinnerSearchIcon i{
-    border-radius:100%;
-    background-color: #ecd014;
-    padding : 10px;
-}
-
-.spinnerSearchIcon img{
-    max-width: 2.2em;
-}
-
-.searchCont{
-    width: 100%;
-    position: relative;
-    background: #2d2f30;
-    color: #f2f2f2;
-    background-color: #2d2f30;
-    border-radius: 25px;
-}
-
-.dropDown{
-    width: 100%;
-    position: absolute;
-    display: block;
-    border-radius: 0 0 25px 25px;
-    border: 0;
-    outline: 0;
-    font-size: 16px;
-    background: #2d2f30;
-    color: #f2f2f2;
-    background-color: #2d2f30;
-    border-width: 70%;
-    border-top: 1px solid #110B0B;
-    overflow: hidden;
-    box-shadow: 0px 26px 38px -2px rgba(0,0,0,0.75);
-}
-
 .clearInputIcon{
     display: flex;
     flex-wrap: nowrap;
@@ -87,6 +59,34 @@
     font-size: 1.2em;
     cursor: pointer;
 }
+.spinnerSearchIcon i{
+    border-radius:100%;
+    background-color: #ecd014;
+    padding : 10px;
+}
+
+.spinnerSearchIcon img{
+    max-width: 2.2em;
+}
+
+
+.dropDown{
+    width: 100%;
+    position: absolute;
+    display: block;
+    border-radius: 0 0 25px 25px;
+    border: 0;
+    outline: 0;
+    font-size: 16px;
+    background: #2d2f30;
+    color: #f2f2f2;
+    background-color: #2d2f30;
+    border-width: 70%;
+    border-top: 1px solid #110B0B;
+    overflow: hidden;
+    box-shadow: 0px 26px 38px -2px rgba(0,0,0,0.75);
+}
+
 
 .dropDownContent{
     display : flex;
@@ -102,13 +102,12 @@
 
 .dropDownContent h4{
     font-weight: 300;
-    /* line-height: 0.4em; */
     margin: 0.4em 0;
 }
 
 .dropDownContent p{
     font-size:0.8em;
-    margin: 0.3em 0;
+    margin: 0.5em 0;
 }
 
 .errorMessage{

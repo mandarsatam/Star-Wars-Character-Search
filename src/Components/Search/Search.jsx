@@ -12,7 +12,7 @@ const Search = () => {
     const [index, setIndex] = React.useState(-1); //Index of selected option in dropdown
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
-    const [reqStatus, setReqStatus] = React.useState(false);
+    const [reqStatus, setReqStatus] = React.useState(false); //Set the status of API request for conditionally rendering results not found message
 
     const history = useHistory();
 
@@ -21,15 +21,18 @@ const Search = () => {
     const searchRef = React.useRef(); // To keep track of user clicks 
     const inputRef = React.useRef(null); //To keep track of the input
 
-    characterListRef.current = characterList.length; //Set the number of options in dropdown
+    //Set the number of options in dropdown
+    characterListRef.current = characterList.length;
 
+
+    //Input change handler
     const handleQuery = (e) => {
         setQuery(e.target.value);
         inputRef.current = e.target.value;
     }
 
+    //Function to make api request and set state for the app
     const getSearchResults = () => {
-        //Function to make api request and set state for the app
         if (inputRef.current.length > 0) {
             axios.get("https://swapi.dev/api/people/", {
                 params: { search: query }
@@ -58,30 +61,9 @@ const Search = () => {
         }
     }
 
-
-    const handleClickOutside = (e) => {
-        //Function to close the dropdown when user clicks outside the search bar or dropdown
-        if (searchRef.current && !searchRef.current.contains(e.target)) {
-            setDropDownActive(false);
-        } else if (searchRef.current.contains(e.target) && characterListRef.current > 0) {
-            //If data is there in characterList then make dropDown as active
-            setDropDownActive(true);
-        }
-    }
-
-    //Function to reset the state if user clears the input using the cross button
-    const handleClearInput = () => {
-        setIsLoading(false);
-        setQuery("");
-        setCharacterList([]);
-        setDropDownActive(false);
-        setReqStatus(false);
-    }
-
+    //Debouncing the query so that the api request is made after 500ms of user typing
     React.useEffect(() => {
-        //Debouncing the query so that the api request is made after 500ms of user typing
-        setIsLoading(false);
-
+        //If the current input is null or empty, return to avoid making api request
         if (
             inputRef.current === null || inputRef.current === ""
         ) {
@@ -106,6 +88,25 @@ const Search = () => {
 
     }, [inputRef.current]);
 
+    //Function to reset the state if user clears the input using the cross button
+    const handleClearInput = () => {
+        setIsLoading(false);
+        setQuery("");
+        setCharacterList([]);
+        setDropDownActive(false);
+        setReqStatus(false);
+    }
+
+
+    //Function to close the dropdown when user clicks outside the search bar or dropdown
+    const handleClickOutside = (e) => {
+        if (searchRef.current && !searchRef.current.contains(e.target)) {
+            setDropDownActive(false);
+        } else if (searchRef.current.contains(e.target) && characterListRef.current > 0) {
+            //If data is there in characterList then make dropDown as active
+            setDropDownActive(true);
+        }
+    }
 
     //Listening to user clicks outside the search
     React.useEffect(() => {
@@ -117,10 +118,13 @@ const Search = () => {
         };
     }, [])
 
+
+    //Handle Mouse Hover over the drop down and set the index to that value
     const handleMouseHover = (idx) => {
         setIndex(idx);
     }
 
+    //Handle Mouse click and route to the corresponding page
     const handleMouseClick = () => {
         if (index >= 0) {
             let arr = characterList[index].url?.trim().split("/");
@@ -131,7 +135,6 @@ const Search = () => {
 
         }
     }
-
 
     // Function to move up-down the dropDown list
     // If keypress is arrow up/down check if the index is out of bound and setIndex
@@ -208,11 +211,11 @@ const Search = () => {
                         <div className={styles.dropDownContent} style={{ backgroundColor: index === idx ? "#242627" : "" }}
                             onMouseEnter={() => handleMouseHover(idx)}
                             onClick={handleMouseClick}>
-                            <div className={styles.dropDownContentLeft}>
+                            <div>
                                 <h4>{char.name}</h4>
                                 <p>{char.birth_year}</p>
                             </div>
-                            <p className={styles.dropDownContentRight}>{char.gender}</p>
+                            <p>{char.gender}</p>
                         </div>
                     ))
                 }
